@@ -20,6 +20,31 @@ function ProfileSidebar(propriedades){
     </Box> 
   )
 }
+
+function ProfileRelationBox(propriedades){
+  return(
+    <ProfileRelationsBoxWrapper>
+      <h2 className="smallTitle">
+        {propriedades.title} 
+        ({propriedades.items.length})
+      </h2>
+      <ul>
+        {/*seguidores.map((itemAtual) => {
+          return (
+            <li key={itemAtual.id}>
+              <a href={`https://github.com/${itemAtual}.png`}>
+                <img src={`https://github.com/${itemAtual}.png`} />
+                <span>{itemAtual}</span>
+              </a>
+            </li>
+          )
+        })*/}
+      </ul>
+    </ProfileRelationsBoxWrapper>
+  )
+}
+
+
 export default function Home() {
   //const [comunidades, setComunidades] = React.useState([`Alurakut`])
   
@@ -34,8 +59,34 @@ export default function Home() {
   ['mlrl2',
   'omariosouto',
   'juunegreiros',
-  'peas'
+  'peas',
+  'lhaisrs'
   ]
+  
+  // Persistir dados de comunidade fazendo integração com APIs
+  // usa o serviço do 
+
+  // step 0: Antes de tudo fazer meu front se comunicar com a API do GitHub
+
+  //ReactuseEffect faz com que o React aguarde o retorno das funcoes ate que recba uma resposta completa do server
+  
+  // No ReactuseEffect passo um array vazio no metodo para que ele apenas execute uma vez.
+  const [seguidores, setSeguidores] = React.useState([]);
+
+  React.useEffect(function(){
+    fetch('https://api.github.com/users/peas/followers')
+    .then(function(respostaDoServidor){
+      return respostaDoServidor.json();
+    })
+    .then(function(respostaCompleta){
+      {/*console.log(respostaCompleta);*/}
+      setSeguidores(respostaCompleta);
+    })
+  }, [])
+    
+  // step 1:Criar os amigos do orkut só que vou carregar eles do Github
+
+
   return (
    <> 
       <AlurakutMenu/>
@@ -90,8 +141,13 @@ export default function Home() {
           </Box>
         </div>
         <div className="profileRelationsArea" style={{gridArea:'profileRelationsArea'}}>
+          <ProfileRelationBox title="Seguidores" items={seguidores}>  
+
+          </ProfileRelationBox>
+
           <ProfileRelationsBoxWrapper>
-          <ul>
+            <h2 className= "smallTitle">Comunidades ()</h2>
+            <ul>
               {comunidades.map((itemAtual) => {
                 return (
                   <li key={itemAtual.id}>
