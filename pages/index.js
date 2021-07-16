@@ -64,7 +64,7 @@ export default function Home() {
   ]
   
   // Persistir dados de comunidade fazendo integração com APIs
-  // usa o serviço do 
+  // usa o serviço do DatoCMS
 
   // step 0: Antes de tudo fazer meu front se comunicar com a API do GitHub
 
